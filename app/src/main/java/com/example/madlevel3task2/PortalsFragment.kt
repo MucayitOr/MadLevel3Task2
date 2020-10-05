@@ -7,23 +7,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.setFragmentResultListener
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
-import com.example.madlevel3task2.Reminder
-import kotlinx.android.synthetic.main.fragment_reminders.*
+import kotlinx.android.synthetic.main.fragment_portals.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class RemindersFragment : Fragment() {
+class PortalsFragment : Fragment() {
 
-    private val reminders = arrayListOf<Reminder>()
-    private var reminderAdapter: ReminderAdapter =
-        ReminderAdapter(reminders) { reminder: Reminder -> portalItemClicked(reminder) }
+    private val portals = arrayListOf<Portal>()
+    private var portalAdapter: PortalAdapter =
+        PortalAdapter(portals) { portal: Portal -> portalItemClicked(portal)
+
+        }
 
 
     override fun onCreateView(
@@ -31,7 +30,7 @@ class RemindersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reminders, container, false)
+        return inflater.inflate(R.layout.fragment_portals, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,21 +40,21 @@ class RemindersFragment : Fragment() {
     }
     private fun initViews() {
         // Initialize the recycler view with a linear layout manager, adapter
-        rvReminders.layoutManager =
+        rvPortals.layoutManager =
             StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-        rvReminders.adapter = reminderAdapter
+        rvPortals.adapter = portalAdapter
         observeAddReminderResult()
-        createItemTouchHelper().attachToRecyclerView(rvReminders)
+        createItemTouchHelper().attachToRecyclerView(rvPortals)
     }
     private fun observeAddReminderResult() {
-        setFragmentResultListener(REQ_REMINDER_KEY) { key, bundle ->
+        setFragmentResultListener(REQ_PORTAL_KEY) { key, bundle ->
             val portalTitle = bundle.getString(ARG_PORTAL_NAME)
             val portalUrl = bundle.getString(ARG_PORTAL_URL)
             if (!portalTitle.isNullOrBlank() && !portalUrl.isNullOrBlank()) {
-                val reminder = Reminder(portalTitle,portalUrl)
+                val reminder = Portal(portalTitle,portalUrl)
 
-                reminders.add(reminder)
-                reminderAdapter.notifyDataSetChanged()
+                portals.add(reminder)
+                portalAdapter.notifyDataSetChanged()
             } else {
                 Log.e(
                     "PortalsFragment",
@@ -87,22 +86,22 @@ class RemindersFragment : Fragment() {
             // Callback triggered when a user swiped an item.
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                reminders.removeAt(position)
-                reminderAdapter.notifyDataSetChanged()
+                portals.removeAt(position)
+                portalAdapter.notifyDataSetChanged()
             }
         }
         return ItemTouchHelper(callback)
     }
 
-    private fun portalItemClicked(portalItem: Reminder) {
+    private fun portalItemClicked(portalItem: Portal) {
         val builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()
 
         // If context is not null launch the Chrome Custom Tabs
         // The Uri needs to begin with 'http://', else you get No Activity found exception
-        context?.let { customTabsIntent.launchUrl(it, Uri.parse((portalItem.reminderText2))) }
+        context?.let { customTabsIntent.launchUrl(it, Uri.parse((portalItem.portalUrl))) }
 
-        Toast.makeText(context, "Clicked: ${portalItem.reminderText2}", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Clicked: ${portalItem.portalUrl}", Toast.LENGTH_LONG).show()
     }
 
 }

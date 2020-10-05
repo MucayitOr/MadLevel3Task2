@@ -15,7 +15,7 @@ card_view:cardElevation="5dp"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvReminder2"
+        android:id="@+id/tvPortalUrl"
         style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,11 +25,11 @@ card_view:cardElevation="5dp"
         card_view:layout_constraintEnd_toEndOf="parent"
         card_view:layout_constraintHorizontal_bias="0.12"
         card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/tvReminder"
+        card_view:layout_constraintTop_toBottomOf="@+id/tvPortalName"
         card_view:layout_constraintVertical_bias="0.058" />
 
     <TextView
-        android:id="@+id/tvReminder"
+        android:id="@+id/tvPortalName"
         style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

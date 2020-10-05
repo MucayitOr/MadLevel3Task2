@@ -1,8 +1,6 @@
 package com.example.madlevel3task2
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener {
             navController.navigate(
-                R.id.action_remindersFragment_to_addReminderFragment
+                R.id.action_PortalsFragment_to_addPortalFragment
             )
         }
 
@@ -33,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fabToggler() {
         navController.addOnDestinationChangedListener { _,       destination, _ ->
-            if (destination.id in arrayOf(R.id.addReminderFragment)) {
+            if (destination.id in arrayOf(R.id.addPortalFragment)) {
                 fab.hide()
             } else {
                 fab.show()
